@@ -55,13 +55,26 @@ class BSTNode:
         """
         Returns the highest value in the tree. 
         Given that this should be the most extreme right value, thats all it checks for.
+        Utilizes recursion.
         """
-        return self.right.get_max() if self.right else self.value
+        if not self:
+            return None
+        return self.right.get_max() if self.right else self.value #Ternarary Operator
+
+    def get_min(self):
+        """
+        Returns the lowest value in the tree.
+        Given that this should be the most extreme left value, thats all it checks for.
+        Utilizes recusion.
+        """
+        if not self:
+            return None
+        return self.left.get_min() if self.left else self.value #Ternarary Operator
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
         """
-        Performs the function fn() on each value of the node.
+        Performs the function fn() on each value of the node using recursion.
         """
         if self.value:
             fn(self.value)
@@ -92,6 +105,7 @@ class BSTNode:
         """
         This generates a list, starting with the given node. It then goes through the nodes, 
         removing a value and adding it to the list.
+        This utilizes a queue (that is to say, remove the first thing on the list.)
         """
         queue = []
         queue.append(self)
@@ -109,12 +123,22 @@ class BSTNode:
     def dft_print(self):
         """
         Gives the value of each node, starting with a given node. Then it repeats the process for the left and then the right.
+        This utilizes a stack (that is to say, removes the last thing on the list)
         """
-        print(self.value)
-        if self.left:
-            self.left.dft_print()
-        if self.right:
-            self.right.dft_print()
+        #print(self.value)
+        #if self.left:
+        #    self.left.dft_print()
+        #if self.right:
+        #    self.right.dft_print()
+        stack = []
+        stack.append(self)
+        while len(stack):
+            current = stack.pop()
+            print(current.value)
+            if current.left:
+                stack.append(current.left)
+            if current.right:
+                stack.append(current.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -122,7 +146,7 @@ class BSTNode:
     # Print Pre-order recursive DFT
     def pre_order_dft(self):
         """
-        This gives the pre-order for the dft.
+        This gives the pre-order for the depth first transverse.
         """
         print(self.value)
         if self.left:
@@ -132,7 +156,7 @@ class BSTNode:
 
     def in_order_dft(self):
         """
-        This gives the in-order for the dft
+        This gives the in-order for the depth first transverse.
         """
         if self.left:
             self.left.in_order_dft()
@@ -143,7 +167,7 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self):
         """
-        This gives the post order for the DFT
+        This gives the post order for the depth first transverse.
         """
         if self.left:
             self.left.post_order_dft()
